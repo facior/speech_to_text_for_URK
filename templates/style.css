@@ -1,0 +1,81 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Stylizacja formularza */
+form {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+    width: 500px;
+    height: 250px;
+}
+
+input[type="file"] {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"] {
+    background-color: #0074cc;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+input[type="submit"]:hover {
+    background-color: #0050aa;
+}
+.custom-file-upload {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+}
+.upload-label {
+    font-size: 15px;
+    border: 2px solid #000;
+    padding: 10px;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    text-align: center; /* Wyśrodkowanie tekstu w poziomie */
+    height: 100px;
+    width: 100%; /* Zmiana szerokości na 100% dostępnej przestrzeni */
+}
+
+.upload-label:hover {
+    background-color: #e0e0e0;
+}
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
