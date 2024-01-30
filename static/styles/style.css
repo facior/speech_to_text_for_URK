@@ -15,7 +15,7 @@ body {
     height: 100vh;
 }
 
-/* Stylizacja formularza */
+
 form {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -25,7 +25,11 @@ form {
     width: 300px;
     text-align: center;
     width: 500px;
-    height: 250px;
+    height: 350px;
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
 }
 
 input[type="file"] {
@@ -62,9 +66,9 @@ input[type="submit"]:hover {
     display: inline-block;
     cursor: pointer;
     background-color: #f0f0f0;
-    text-align: center; /* Wyśrodkowanie tekstu w poziomie */
+    text-align: center;
     height: 100px;
-    width: 100%; /* Zmiana szerokości na 100% dostępnej przestrzeni */
+    width: 100%;
 }
 
 .upload-label:hover {
@@ -78,4 +82,10 @@ input[type="submit"]:hover {
     position: absolute;
     bottom: 0;
     width: 100%;
+}
+#container {
+    margin: 20px;
+    width: 200px;
+    height: 100px;
+    background-color: #fff;
 }

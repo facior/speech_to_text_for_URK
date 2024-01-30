@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, make_response
+from flask import Flask, render_template, request, make_response, jsonify, Response
 from pydub import AudioSegment
 import openai
 import os
+import openai_api_key
+from docx import Document
 
 app = Flask(__name__)
 
-# Ustaw swój klucz API OpenAI
-openai.api_key = "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"
+openai.api_key = openai_api_key.API_KEY
 
-def transcribe_audio(audio_file_path):
+
+def transcribe_audio_with_progress(audio_file_path):
     audio = AudioSegment.from_file(audio_file_path)
     segment_length = 2 * 60 * 1000
     segments = [audio[i:i + segment_length] for i in range(0, len(audio), segment_length)]
@@ -33,21 +35,45 @@ def transcribe_audio(audio_file_path):
 
     return transcriptions
 
+
+def generate_transcription(audio_file):
+    transcriptions = transcribe_audio_with_progress(audio_file)
+
+    # Create a Word document
+    doc = Document()
+
+    for transcription in transcriptions:
+        doc.add_paragraph(transcription)
+
+    # Save the document
+    doc.save("transcriptions.docx")
+
+    return "transcriptions.docx"
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         audio_file = request.files['audio_file']
         if audio_file:
             audio_file.save("uploaded_audio.mp3")
-            transcriptions = transcribe_audio("uploaded_audio.mp3")
-            with open("transcriptions.txt", "w", encoding="utf-8") as output_file:
-                for transcription in transcriptions:
-                    output_file.write(transcription + '\n')
-            response = make_response(open("transcriptions.txt", "r", encoding="utf-8").read())
-            response.headers["Content-Disposition"] = "attachment; filename=transkrypcja.txt"
+
+            def generate():
+                result_file = generate_transcription("uploaded_audio.mp3")
+                with open(result_file, "rb") as f:
+                    while True:
+                        chunk = f.read(8192)
+                        if not chunk:
+                            break
+                        yield chunk
+
+            response = Response(generate(), content_type="application/octet-stream")
+            response.headers["Content-Disposition"] = "attachment; filename=transkrypcja.docx"
+
             return response
 
     return render_template('index.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
